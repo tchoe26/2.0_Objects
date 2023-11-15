@@ -8,7 +8,7 @@ public class Astronaut {
     //VARIABLE DECLARATION SECTION
     //Here's where you state which variables you are going to use.
     public String name;                //holds the name of the hero
-    public int xpos;                //the x position
+    public static int xpos;                //the x position
     public int ypos;                //the y position
     public int dx;                    //the speed of the hero in the x direction
     public int dy;                    //the speed of the hero in the y direction
@@ -28,8 +28,8 @@ public class Astronaut {
     public Astronaut(int pXpos, int pYpos) {
         xpos = pXpos;
         ypos = pYpos;
-        dx =-1;
-        dy =-1;
+        dx =-5;
+        dy =-5;
         width = 60;
         height = 60;
         isAlive = true;
@@ -38,6 +38,10 @@ public class Astronaut {
 
     //The move method.  Everytime this is run (or "called") the hero's x position and y position change by dx and dy
     public void move() {
+        if (xpos <=0 || xpos>=960)
+            dx=-dx;
+        if (ypos <=0 || ypos>=640)
+            dy=-dy;
         xpos = xpos + dx;
         ypos = ypos + dy;
  
