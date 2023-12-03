@@ -99,9 +99,13 @@ public class BasicGameApp implements Runnable {
       //calls the move( ) code in the objects
 		astro.wrap();
 		astro2.bounce();
-		if (astro.rec.intersects(astro2.rec))
+		if (astro.rec.intersects(astro2.rec)) {
+			astro.dx = -astro.dx;
+			astro.dy = -astro.dy;
+			astro2.dx = -astro.dx;
+			astro2.dy = -astro.dy;
 			System.out.println("lol");
-
+		}
 	}
 	
    //Pauses or sleeps the computer for the amount specified in milliseconds
