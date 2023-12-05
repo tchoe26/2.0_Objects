@@ -41,11 +41,13 @@ public class BasicGameApp implements Runnable {
 	public Image astroPic;
 	public Image astroPic2;
 	public Image astroBackground;
+	public Image pongPaddlePic;
 
    //Declare the objects used in the program
    //These are things that are made up of more than one variable type
 	private Astronaut astro;
 	private Astronaut astro2;
+	private Astronaut pongPaddle;
 
 
    // Main method definition
@@ -67,10 +69,13 @@ public class BasicGameApp implements Runnable {
       //variable and objects
       //create (construct) the objects needed for the game and load up 
 		astroPic = Toolkit.getDefaultToolkit().getImage("DVD.png"); //load the picture
-		astro = new Astronaut((int)(Math.random()*940),(int)(Math.random()*700));
+		astro = new Astronaut((int)(Math.random()*940),(int)(Math.random()*700), -10, -10);
 		astroPic2 = Toolkit.getDefaultToolkit().getImage("Astronaut.png");
-		astro2 = new Astronaut((int)(Math.random()*940),(int)(Math.random()*700));
+		astro2 = new Astronaut((int)(Math.random()*940),(int)(Math.random()*700), -10, -10);
 		astroBackground = Toolkit.getDefaultToolkit().getImage("astroBackground.jpg");
+		pongPaddlePic = Toolkit.getDefaultToolkit().getImage("PongPaddle2.png");
+		pongPaddle = new Astronaut(900,250, 0, 10);
+
 
 	}// BasicGameApp()
 
@@ -97,14 +102,19 @@ public class BasicGameApp implements Runnable {
 	public void moveThings()
 	{
       //calls the move( ) code in the objects
-		astro.wrap();
+		astro.bounce();
 		astro2.bounce();
-		if (astro.rec.intersects(astro2.rec)) {
+		pongPaddle.bounce();
+		if (astro.rec.intersects(astro2.rec)&&astro.isCrashing ==false) {
 			astro.dx = -astro.dx;
 			astro.dy = -astro.dy;
 			astro2.dx = -astro.dx;
 			astro2.dy = -astro.dy;
 			System.out.println("lol");
+			astro.isCrashing=true;
+		}
+		if (!astro.rec.intersects(astro2.rec)) {
+			astro.isCrashing=false;
 		}
 	}
 	
@@ -158,8 +168,11 @@ public class BasicGameApp implements Runnable {
 		g.drawImage(astroBackground,0,0,WIDTH,HEIGHT,null);
 		g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
 		g.drawImage(astroPic2, astro2.xpos, astro2.ypos, astro2.width, astro2.height, null);
+		g.drawImage(pongPaddlePic,pongPaddle.xpos, pongPaddle.ypos, 10, 100, null);
 		g.dispose();
 
 		bufferStrategy.show();
+
+
 	}
 }
