@@ -105,7 +105,7 @@ public class BasicGameApp implements Runnable {
 		astro.bounce();
 		astro2.bounce();
 		pongPaddle.bounce();
-		if (astro.rec.intersects(astro2.rec)&&astro.isCrashing ==false) {
+		if (astro.rec.intersects(astro2.rec)&& !astro.isCrashing) {
 			astro.dx = -astro.dx;
 			astro.dy = -astro.dy;
 			astro2.dx = -astro.dx;
@@ -115,6 +115,22 @@ public class BasicGameApp implements Runnable {
 		}
 		if (!astro.rec.intersects(astro2.rec)) {
 			astro.isCrashing=false;
+		}
+		if (pongPaddle.rec.intersects(astro.rec)&& !pongPaddle.isCrashing) {
+			pongPaddle.height = pongPaddle.height+50;
+			System.out.println("height changed");
+			pongPaddle.isCrashing=true;
+		}
+		if (!pongPaddle.rec.intersects(astro.rec)) {
+			pongPaddle.isCrashing=false;
+		}
+		if (pongPaddle.rec.intersects(astro2.rec)&& !pongPaddle.isCrashing) {
+			pongPaddle.height = pongPaddle.width+50;
+			pongPaddle.isCrashing=true;
+			System.out.println("width changed");
+		}
+		if (!pongPaddle.rec.intersects(astro2.rec)) {
+			pongPaddle.isCrashing=false;
 		}
 	}
 	
@@ -168,7 +184,7 @@ public class BasicGameApp implements Runnable {
 		g.drawImage(astroBackground,0,0,WIDTH,HEIGHT,null);
 		g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
 		g.drawImage(astroPic2, astro2.xpos, astro2.ypos, astro2.width, astro2.height, null);
-		g.drawImage(pongPaddlePic,pongPaddle.xpos, pongPaddle.ypos, 10, 100, null);
+		g.drawImage(pongPaddlePic,pongPaddle.xpos, pongPaddle.ypos, pongPaddle.width, pongPaddle.height, null);
 		g.dispose();
 
 		bufferStrategy.show();
